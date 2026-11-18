@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\AttendanceFeeController;
 use App\Http\Controllers\Admin\AttendanceReportController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\MemberPaymentController;
+use App\Http\Controllers\Admin\PrivateTrainingPaymentController;
+use App\Http\Controllers\Admin\PrivateTrainingSessionController;
 use App\Http\Controllers\Admin\TrainingSessionController;
 use App\Http\Controllers\AdminAuthController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +33,8 @@ Route::prefix('admin/absensi')
         Route::view('/', 'welcome', ['page' => 'admin'])->name('dashboard');
         Route::view('/sesi', 'welcome', ['page' => 'admin'])->name('sessions.page');
         Route::view('/sesi/{trainingSession}', 'welcome', ['page' => 'admin'])->name('sessions.detail-page');
+        Route::view('/latihan-private', 'welcome', ['page' => 'admin'])->name('private-training.page');
+        Route::view('/latihan-private/{privateTrainingSession}', 'welcome', ['page' => 'admin'])->name('private-training.detail-page');
         Route::view('/program-latihan', 'welcome', ['page' => 'admin'])->name('programs.page');
         Route::view('/iuran', 'welcome', ['page' => 'admin'])->name('fees.page');
         Route::view('/anggota', 'welcome', ['page' => 'admin'])->name('members.page');
@@ -40,6 +44,13 @@ Route::prefix('admin/absensi')
         Route::get('/api/sesi', [TrainingSessionController::class, 'index'])->name('sessions.index');
         Route::get('/api/program-sesi', [TrainingSessionController::class, 'programIndex'])->name('programs.sessions');
         Route::get('/api/iuran', AttendanceFeeController::class)->name('fees.index');
+        Route::get('/api/latihan-private', [PrivateTrainingSessionController::class, 'index'])->name('private-training.index');
+        Route::post('/api/latihan-private', [PrivateTrainingSessionController::class, 'store'])->name('private-training.store');
+        Route::get('/api/latihan-private/{privateTrainingSession}', [PrivateTrainingSessionController::class, 'show'])->name('private-training.show');
+        Route::post('/api/latihan-private/{privateTrainingSession}/peserta', [PrivateTrainingSessionController::class, 'addParticipant'])->name('private-training.participants.store');
+        Route::post('/api/latihan-private/{privateTrainingSession}/peserta/{participant}/hadir', [PrivateTrainingSessionController::class, 'markAttendance'])->name('private-training.attendance.store');
+        Route::patch('/api/latihan-private/{privateTrainingSession}/tutup', [PrivateTrainingSessionController::class, 'close'])->name('private-training.close');
+        Route::post('/api/latihan-private-peserta/{participant}/pembayaran', [PrivateTrainingPaymentController::class, 'store'])->name('private-training.payments.store');
         Route::post('/api/sesi', [TrainingSessionController::class, 'store'])->name('sessions.store');
         Route::get('/api/sesi/{trainingSession}', [TrainingSessionController::class, 'show'])->name('sessions.show');
         Route::delete('/api/sesi/{trainingSession}', [TrainingSessionController::class, 'destroy'])->name('sessions.destroy');
@@ -65,5 +76,6 @@ Route::prefix('admin/absensi')
         Route::post('/api/anggota/{member}/pembayaran-pendaftaran', [MemberPaymentController::class, 'storeRegistration'])
             ->name('members.registration-payments.store');
 
+        Route::get('/api/rekap/export', [AttendanceReportController::class, 'exportExcel'])->name('reports.export');
         Route::get('/api/rekap', AttendanceReportController::class)->name('reports.index');
     });

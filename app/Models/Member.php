@@ -34,4 +34,10 @@ class Member extends Model
     {
         return $this->hasMany(RegistrationFeePayment::class);
     }
+
+    /** @return HasMany<PrivateTrainingParticipant, $this> */
+    public function privateTrainingParticipations(): HasMany
+    {
+        return $this->hasMany(PrivateTrainingParticipant::class);
+    }
 }
