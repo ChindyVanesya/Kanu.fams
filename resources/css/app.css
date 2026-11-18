@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+
+@theme {
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    --color-slate-50: #f8f8f6;
+    --color-slate-100: #f0f0ed;
+    --color-slate-200: #e2e3df;
+    --color-slate-300: #d3d5d0;
+    --color-slate-400: #a1a5a0;
+    --color-slate-500: #737a78;
+    --color-slate-600: #59615f;
+    --color-slate-700: #414b4a;
+    --color-slate-800: #2d393a;
+    --color-slate-900: #1e2a2b;
+    --color-slate-950: #111b1c;
+    --color-orange-50: #fcf7f2;
+    --color-orange-100: #f7e9dc;
+    --color-orange-200: #efd5bf;
+    --color-orange-300: #e7b994;
+    --color-orange-400: #d99a6e;
+    --color-orange-500: #c97e4c;
+    --color-orange-600: #ad693f;
+    --color-orange-700: #8f5838;
+    --color-orange-800: #754832;
+    --color-orange-900: #603c2d;
+}
+
+body {
+    font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+button:not(:disabled),
+[role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+}
+
+button:disabled,
+[role='button'][aria-disabled='true'] {
+    cursor: not-allowed;
+}
+
+@source '../js/**/*.vue';
+@source '../views/**/*.blade.php';
