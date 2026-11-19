@@ -19,7 +19,7 @@
 /.zed
 /auth.json
 /node_modules
-/public/build
+# /public/build
 /public/fonts-manifest.dev.json
 /public/hot
 /public/storage
@@ -41,6 +41,7 @@
 *.sqlite-*
 *.dump
 *.sql
+!database/neon_schema.sql
 _ide_helper.php
 Homestead.json
 Homestead.yaml
